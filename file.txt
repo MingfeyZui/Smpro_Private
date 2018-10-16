@@ -1,1 +1,2 @@
 23:01 16 Okt 2018 file.txt wurde geändert
+23:05 eine zweite Änderung wurde gemacht

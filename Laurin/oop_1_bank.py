@@ -34,37 +34,78 @@ class Account:
 
     """ Methoden der Klasse Account. """
     def withdraw(self, amount):
-        if amount > self.balance:
-            amount = self.balance
-        self.balance -= amount
+        '''withdraws an amount from an account - max negative is -3000'''
+        if self.balance - amount < -3000:
+            amount += -3000
+            self.balance = -3000
+        else:
+            self.balance -= amount
         return amount
+
     def deposit(self, amount):
-        self.balance += amount
+        '''to deposit a positive amount in the account'''
+        if not amount < 1:
+            self.balance += amount
+
     def __str__(self):
+        '''string representation of the account object'''
         res = "*** Account Info ***\n"
         res += "Account ID: " + str(self.number) + "\n"
         res += "Holder: " + self.holder + "\n"
         res += "Balance: " + str(self.balance) + "\n"
+        if self.formerholder != "":
+            res += "Former Holder: " + self.formerholder + "\n"
         return res
+
     def set_holder(self, person):
+        '''change account holder'''
         if (not type(person) == str):
             raise TypeError
-        if (not re.match("\W+( \W+)*", person.strip())):
-            raise ValueError
+        self.formerholder = self.holder
         self.holder = person
+
+    def apply_interest(self):
+        self.balance *= 1.015
+
     @staticmethod
     def accounts_info():
-        print(Account.num_of_accounts, "accounts have been created")
+        '''prints the number of all created accounts at any moment'''
+        print(str(Account.num_of_accounts) + " accounts have been created\n")
     
     """ Konstruktor """
     def __init__(self, num, person):
+        '''initializes account with balance=0, number and holder variables'''
         self.balance = 0
         self.number = num
         self.holder = person
+        self.formerholder = ""
         Account.num_of_accounts += 1
     
 
 if __name__ == "__main__":
     print("Welcome to the Python Bank!")
-
+    nechniezesAcc = Account(1, "Nechniez")
+    rellobeetsAcc = Account(2, "Rellobeet")
+    ladislausesAcc = Account(3, "Ladislaus")
+    fuerchtegottsAcc = Account(89, "Fuerchtegott")
+    nechniezesAcc.deposit(3000)
+    rellobeetsAcc.deposit(300)
+    ladislausesAcc.deposit(8)
+    rellobeetsAcc.withdraw(400)
+    print(rellobeetsAcc)
+    Account.accounts_info()
+    nechniezesAcc.withdraw(1000)
+    nechniezesAcc.apply_interest()
+    print(nechniezesAcc)
+    ladislausesAcc.deposit(-4000)
+    print(ladislausesAcc)
+    ladislausesAcc.withdraw(10)
+    print(ladislausesAcc)
+    fuerchtegottsAcc.set_holder(ladislausesAcc.holder)
+    print(fuerchtegottsAcc)
+    fuerchtegottsAcc.deposit(0)
+    print(fuerchtegottsAcc)
+    
+    
+    Account.accounts_info()
 

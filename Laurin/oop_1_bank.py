@@ -128,9 +128,3 @@ if __name__ == "__main__":
 #   |withdraw(self,amount)    |
 #   |{static}accounts_info()  |
 #   +-------------------------+
-#   
-#   
-#   
-#   
-#   
-#   

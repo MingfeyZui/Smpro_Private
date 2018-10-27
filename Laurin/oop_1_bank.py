@@ -109,3 +109,28 @@ if __name__ == "__main__":
     
     Account.accounts_info()
 
+#   In Python Klassenvariablen (statische Variablen) und -methoden
+#   auch in die "Klasse der Objekte" schreiben?
+#   +-------------------------+
+#   |         Account         |
+#   |-------------------------|
+#   |{static}num_of_accounts  |
+#   |balance                  |
+#   |holder                   |
+#   |number                   |
+#   |formerholder             |
+#   |-------------------------|
+#   |__init__(self,num,person)|
+#   |__str__(self)            |
+#   |apply_interest(self)     |
+#   |set_holder(self,person)  |
+#   |deposit(self,amount)     |
+#   |withdraw(self,amount)    |
+#   |{static}accounts_info()  |
+#   +-------------------------+
+#   
+#   
+#   
+#   
+#   
+#   

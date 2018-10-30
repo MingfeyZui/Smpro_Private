@@ -33,12 +33,16 @@ class Account:
 
     # Konstruktor
     def __init__(self, num, name):
+        """Erzeugt ein Account-Objekt"""
+
         self.balance = 0
         self.number = num
         self.holder = name
 
     #Methoden
     def __str__(self):
+        """Gibt die Daten eines Accounts als String zurück"""
+
         res = "*** Account Informationen ***\n"
         res += "Account-ID: " + str(self.number) + "\n"
         res += "Inhaber: " + self.holder + "\n"
@@ -46,23 +50,33 @@ class Account:
         return res
 
     def set_holder(self, name):
+        """Ändert den Namen des Inhabers"""
+
         if name != self.holder:
             self.holder = name
 
     def withdraw(self, amount):
-        if amount > self.balance:
-            amount = self.balance
-        self.balance -= amount
-        return amount
+        """Reduziert den Kontostabd um den festgelegten Betrag bis maximal -1000"""
+
+        if (self.balance - amount) < -1000:
+            ramount = self.balance + 1000
+            self.balance = -1000
+            return ramount
+        else:
+            self.balance -= amount
+            return amount
 
     def deposit(self, amount):
+        """Erhöt den Kontostand um den festgelegten Betrag"""
+
         self.balance += amount
         return self.balance
 
     def apply_interest(self):
-        self.balance *= 1.015
-        self.balance = int(self.balance)
-        return self.balance
+        """Erhöht den Kontostand um 1,5%, wenn dieser Positiv ist"""
+
+        if self.balance >= 0:
+            self.balance = round(self.balance *1.015)
 
 
 
@@ -73,8 +87,8 @@ if __name__ == "__main__":
     laurinsAcc = Account(2, "Laurin")
     haotiensAcc = Account(3, "Haotien")
 
-    leosAcc.deposit(5000)
-    laurinsAcc.deposit(2000)
+    leosAcc.deposit(4000)
+    laurinsAcc.deposit(1000)
     haotiensAcc.deposit(3000)
 
     print(leosAcc, laurinsAcc, haotiensAcc)
@@ -82,6 +96,7 @@ if __name__ == "__main__":
     leosAcc.withdraw(6000)
     laurinsAcc.apply_interest()
     haotiensAcc.set_holder("Mingfei")
+    haotiensAcc.withdraw(3500)
 
     print(leosAcc, laurinsAcc, haotiensAcc)
 

@@ -30,8 +30,59 @@ class Account:
     which data objects this class is designed for.
     You have to remove the pass statement and then write some
     code for the class. """
-    pass
+
+    # Konstruktor
+    def __init__(self, num, name):
+        self.balance = 0
+        self.number = num
+        self.holder = name
+
+    #Methoden
+    def __str__(self):
+        res = "*** Account Informationen ***\n"
+        res += "Account-ID: " + str(self.number) + "\n"
+        res += "Inhaber: " + self.holder + "\n"
+        res += "Konstostand: " + str(self.balance) + "\n"
+        return res
+
+    def set_holder(self, name):
+        if name != self.holder:
+            self.holder = name
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            amount = self.balance
+        self.balance -= amount
+        return amount
+
+    def deposit(self, amount):
+        self.balance += amount
+        return self.balance
+
+    def apply_interest(self):
+        self.balance *= 1.015
+        self.balance = int(self.balance)
+        return self.balance
+
+
 
 if __name__ == "__main__":
     print("Welcome to the Python Bank!")
+
+    leosAcc = Account(1, "Leo")
+    laurinsAcc = Account(2, "Laurin")
+    haotiensAcc = Account(3, "Haotien")
+
+    leosAcc.deposit(5000)
+    laurinsAcc.deposit(2000)
+    haotiensAcc.deposit(3000)
+
+    print(leosAcc, laurinsAcc, haotiensAcc)
+
+    leosAcc.withdraw(6000)
+    laurinsAcc.apply_interest()
+    haotiensAcc.set_holder("Mingfei")
+
+    print(leosAcc, laurinsAcc, haotiensAcc)
+
 

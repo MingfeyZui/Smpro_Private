@@ -28,15 +28,28 @@ class Employee:
         res += "Personalnummer: " + str(self.ID) +"\n"
         res += "Abteilung: " + self.department + "\n"
         res += "Gehalt: " + str(self.salary) +"\n"
-        res += "Verheiratet: " + str(self.married) + "\n"
+        res += "Verheiratet: " + str(self.married) + "\n\n"
         return res
 
-    def change_marital_status(self, new_surename):
+    def change_marital_status(self, new_surename = None):
         if not self.married:
-            self.surename = new_surename
+            if new_surename != None:
+                self.surename = new_surename
             self.married = True
         else:
+            if new_surename != None:
+                self.surename = new_surename
             self.married = False
+
+    def change_salary(self, amount):
+        self.salary = amount
+
+    def change_department(self, new_department):
+        self.department = new_department
+
+
+
+
 
 if __name__ == "__main__":
     print("Employee application")
@@ -48,6 +61,11 @@ if __name__ == "__main__":
     print(leo, sepp, elise)
 
     elise.change_marital_status("König")
-    leo.change_marital_status(leo.surename)
+    leo.change_marital_status()
 
     print(leo, elise)
+
+    sepp.change_department(Rezeption)
+    elise. change_salary(4000)
+
+    print(sepp, elise)

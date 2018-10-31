@@ -14,7 +14,7 @@ c) Draw a UML class diagram for your Employee class. (1 point)
 class Employee:
     def __init__(self, age, pID, name, surename, depart, mon_salary, married = False):
         self.age = age
-        self.ID = pID
+        self.ID = int(str(pID).lstrip("0"))
         self.name = name
         self.surename = surename
         self.department = depart
@@ -54,7 +54,7 @@ class Employee:
 if __name__ == "__main__":
     print("Employee application")
 
-    leo = Employee(29, 1, "Leonhard", "Wabro", "IT-Service", 2500)
+    leo = Employee(29, 001, "Leonhard", "Wabro", "IT-Service", 2500)
     sepp = Employee(25, 2, "Sepp", "Huber", "IT-Service", 2500, True)
     elise = Employee(18, 3, "Elise", "Meyer", "Rezeption", 3000)
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     print(leo, elise)
 
-    sepp.change_department(Rezeption)
+    sepp.change_department("Rezeption")
     elise. change_salary(4000)
 
     print(sepp, elise)

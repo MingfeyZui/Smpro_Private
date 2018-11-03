@@ -1,3 +1,8 @@
+### in test_documents.py die Pfade ./hw03_documents/example_document1.txt ect
+### müssen geändert werden so dass die example_documents in sympro_provat
+### geöffnet werden können
+
+
 import nltk
 
 def normalized_tokens(text):
@@ -10,18 +15,19 @@ class TextDocument:
         """ This creates a from a string and an identifier. """
         self.text = text
         self.word_to_count = {}
-        for word in nltk.word_tokenize(text):
-            if word in word_to_count:
-                word_to_count[word] += 1
+        for word in nltk.word_tokenize(self.text):
+            if word.lower() in self.word_to_count:
+                self.word_to_count[word.lower()] += 1
             else:
-                word_to_count[word] = 1
+                self.word_to_count[word.lower()] = 1
         self.id = id
 
     @classmethod
     def from_file(cls, filename):
         """ This creates a TextDokument by reading a file. """
-        text = filename.read()
-        return cls(text, filename)
+        with open(filename) as file:
+            text = file.read()
+            return cls(text, filename)
 
     def __str__(self):
         """ This returns a short string representation, which is at most 25 characters long.

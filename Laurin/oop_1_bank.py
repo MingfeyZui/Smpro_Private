@@ -26,8 +26,6 @@ e) Draw a UML diagram representing your Account class. (1 point)
 
 #! /usr/bin/python3
 
-import re
-
 class Account:
     """Klassenattribute"""
     num_of_accounts = 0

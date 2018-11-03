@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hw03_documents.document import TextDocument, normalized_tokens
+from document import TextDocument, normalized_tokens
 
 class TextDocumentTest(TestCase):
     def setUp(self):
@@ -23,13 +23,13 @@ class TextDocumentTest(TestCase):
         self.assertEqual(doc2.word_to_count, expected_dict2)
 
     def testFromFileMethod(self):
-        doc1 = TextDocument.from_file("./hw03_documents/example_document1.txt")
+        doc1 = TextDocument.from_file("./example_document1.txt")
         token_set = set(doc1.word_to_count.keys())
         expected_token_set = {'dr.', 'strangelove', 'is', 'the', 'u.s.', 'president', \
                               "'s", 'advisor', '.'}
         self.assertEqual(token_set, expected_token_set)
 
-        doc2 = TextDocument.from_file("./hw03_documents/example_document2.txt")
+        doc2 = TextDocument.from_file("./example_document2.txt")
         self.assertEqual(doc2.word_to_count["die"], 2)
         self.assertTrue("länder" in doc2.word_to_count)
 

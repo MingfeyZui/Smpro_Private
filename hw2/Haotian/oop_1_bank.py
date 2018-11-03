@@ -24,7 +24,6 @@ e) Draw a UML diagram representing your Account class. (1 point)
 
 """
 
-#Draw a UML diagram representing your Account class
 
 class Account:
     """ The class contains a constructor that sets the account
@@ -33,13 +32,24 @@ class Account:
     set_holder() changes the account holder.
     """
 
-    def __init__(self, holder, start_balance):
+    def __init__(self, number, holder, start_balance):
         """
-        create account, set account holder and first
+        create account, set account ID, holder and first
         deposit(start balance)
         """
+        self.number = number
         self.holder = holder
         self.balance = start_balance
+
+    def __str__(self):
+        """
+        string representation of the account object
+        """
+        res = "*** Account Info ***\n"
+        res += "Account ID: " + str(self.number) + "\n"
+        res += "Holder: " + self.holder + "\n"
+        res += "Balance: " + str(self.balance) + "\n"
+        return res
 
     def deposit(self, amount):
         """
@@ -71,13 +81,13 @@ class Account:
         apply interest of 1.5%
         the balance is multiplied by 1.015
         """
-        self.balance *= 1.015
+        self.balance = round(self.balance * 1.015)
 
 if __name__ == "__main__":
     print("Welcome to the Stirnlappenbasilisk Bank!")
 
     print("Tom Sawyer opens an account and deposits $1000.")
-    account1 = Account("Tom Sawyer", 1000)
+    account1 = Account(1, "Tom Sawyer", 1000)
 
     account1.deposit(150)
     print("Tom deposits $150 more on his account.")

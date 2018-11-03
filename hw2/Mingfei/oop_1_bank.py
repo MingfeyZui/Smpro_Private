@@ -30,8 +30,67 @@ class Account:
     which data objects this class is designed for.
     You have to remove the pass statement and then write some
     code for the class. """
-    pass
 
+
+# Konstruktur
+def _init_(self,idNumber,person,balance):
+    self.balance = 0
+    self.idNummer= idNumber
+    self.holder = person
+    self.balance = balance
+
+
+# (a) Hooks
+def _str_(self):
+
+    res = "*** Account Information ***"
+    res += "\n Account ID: " + str(self.idNummer)
+    res += "\n Account Holder Name： " + str(self.holder)
+    res += "\n Account Balance: " + str(self.balance)
+
+    return res
+
+
+# (b) Setter-Methode for holder
+def set_holder(self,holder):
+    if (not type(person) == str):
+        raise TypeError
+    if not re.match("\w + (\w+)*").person.strip():
+        raise ValueError
+    self.holder = person
+
+
+
+#  (b)/ (c)  Methoden
+def deposit(self, amount):
+
+    self.balance += amount
+
+def withdraw(self, amount):
+    if self.balance > -1000:
+        self.balance -= amount
+
+def apply_interest(self):
+    interst = 0.015 * self.balance
+    self.balance += interst
+
+
+
+
+# main Methode
 if __name__ == "__main__":
     print("Welcome to the Python Bank!")
+    account1 = Account()
+    account2 = Account()
+
+    account1.__setattr__("A",3000)
+    account2.__setattr__("B",5000)
+
+
+
+
+
+
+
+    
 

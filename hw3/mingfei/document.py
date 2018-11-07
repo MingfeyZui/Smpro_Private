@@ -3,28 +3,28 @@ from nltk import word_tokenize, FreqDist
 
 def normalized_tokens(text):
     """ This takes a string and returns lower-case tokens, using nltk for tokenization. """
-    return text.lower(word_tokenize(text))# TODO: return list with lower-case tokens.
+    return [token.lower() for token in word_tokenize(text)]     # TODO: return list with lower-case tokens.
 
 class TextDocument:
     def __init__(self, text, id=None):
         """ This creates a from a string and an identifier. """
         self.text = text
-        self.word_to_count = FreqDist(text.normalized_tokens(text))# TODO: Create dictionary from words to counts.
+        self.word_to_count = FreqDist(normalized_tokens(text))     # TODO: Create dictionary from words to counts.
         self.id = id
 
     @classmethod
     def from_file(cls, filename):
         """ This creates a TextDokument by reading a file. """
-         with open(filename,'r') as myfile:
-            text = myfile.read().strip() # TODO: read text from filename
-        return cls(text, filename)
+        with open(filename, 'r') as file:
+            text = file.read()              # TODO: read text from filename
+            return cls(text, filename)
 
     def __str__(self):
         """ This returns a short string representation, which is at most 25 characters long.
         If the original text is longer than 25 characters, the last 3 characters of the short string should be '...'.
         """
         if len(self.text) > 25:         # TODO: Implement correct return statement.
-            return self.text[:22] + '...'
+            return self.text[:22] + "..."
         else:
             return self.text
 

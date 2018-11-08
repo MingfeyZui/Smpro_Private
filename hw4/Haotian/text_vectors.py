@@ -4,27 +4,49 @@ import os, math
 
 
 def dot(dictA, dictB):
+    """ returns dot product of dictA and dictB: multiplies values of their common attributes(frequency of token), if token does not exist in dictB, a default of 0 is used
+
+    cosine similarity?
+
+    >>> dot({1:1, 2:2, 3:3}, {2:2, 3:3, 4:4})
+    13
+    >>> dot({1:2, 2:3}, {1:3, 2:4})
+    18
+
+    """
     return sum([dictA.get(tok) * dictB.get(tok, 0) for tok in dictA])
 
 
 def normalized_tokens(text):
+    """ returns a list with lower case tokenized text
+    >>> normalized_tokens("Hello World.")
+    ['hello', 'world', '.']
+    >>> normalized_tokens("This is a Test Sentence")
+    ['this', 'is', 'a', 'test', 'sentence']
+    """
     return [token.lower() for token in word_tokenize(text)]
 
 
 class TextDocument:
     def __init__(self, text, id=None):
+        """ creates a TextDocument object with variables text, doc id and a frequency list
+        """
         self.text = text
         self.token_counts = FreqDist(normalized_tokens(text))
         self.id = id
 
     @classmethod
     def from_file(cls, filename):
+        """ returns a TextDocument object with text read from the file(filename) and filename as the doc id
+        """
         with open(filename, 'r') as myfile:
             text = myfile.read().strip()
         return cls(text, filename)
 
 
 class DocumentCollection:
+    """ creates DocumentCollection object, passes in term_to_df, term_to_docids, docid_to_doc
+    """
     def __init__(self, term_to_df, term_to_docids, docid_to_doc):
         # string to int
         self.term_to_df = term_to_df
@@ -35,12 +57,16 @@ class DocumentCollection:
 
     @classmethod
     def from_dir(cls, dir, file_suffix):
+        """ creates DocumentCollection objects from files with suffix file_suffix in dir
+        """
         files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
         docs = [TextDocument.from_file(f) for f in files]
         return cls.from_document_list(docs)
 
     @classmethod
     def from_document_list(cls, docs):
+        """ creates DocumentCollection objects from a list of documents(docs)
+        """
         term_to_df = defaultdict(int)
         term_to_docids = defaultdict(set)
         docid_to_doc = dict()
@@ -52,15 +78,21 @@ class DocumentCollection:
         return cls(term_to_df, term_to_docids, docid_to_doc)
 
     def docs_with_all_tokens(self, tokens):
+        """ returns a list of docids corresponding to documents with all the tokens present
+        """
         docids_for_each_token = [self.term_to_docids[token] for token in tokens]
         docids = set.intersection(*docids_for_each_token)  # union?
         return [self.docid_to_doc[id] for id in docids]
 
     def tfidf(self, counts):
+        """ returns a dictionary mapping all tokens to their tf-idfs
+        """
         N = len(self.docid_to_doc)
         return {tok: tf * math.log(N / self.term_to_df[tok]) for tok, tf in counts.items() if tok in self.term_to_df}
 
     def cosine_similarity(self, docA, docB):
+        """ returns cosine similarity between docA and docB
+        """
         weightedA = self.tfidf(docA.token_counts)
         weightedB = self.tfidf(docB.token_counts)
         dotAB = dot(weightedA, weightedB)

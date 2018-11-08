@@ -53,5 +53,3 @@ class TextDocument:
             if word in other_doc.word_to_count:
                 count += 1
         return count
-
-

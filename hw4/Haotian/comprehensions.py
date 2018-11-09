@@ -42,12 +42,12 @@ def word_to_length(list1):
 
 ######## main ########
 
-# list1 = ["one", "two", "three", "four"]
-# list2 = [1,2,3]
-# print(map_zip(list1, list2))
-# s = {1,2,3}
-#
-# print(s.remove(3))
-# print({1,1,1,1,2,3,3,3,4}.remove(3))
+list1 = ["one", "two", "three", "four"]
+list2 = [1,2,3]
+print(map_zip(list1, list2))
+s = {1,2,3}
+
+print(s.remove(3))
+print({1,1,1,1,2,3,3,3,4}.remove(3))
 
 print(div_less({3,4,8,20}))

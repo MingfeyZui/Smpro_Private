@@ -103,9 +103,13 @@ class DocumentCollection:
 
 class SearchEngine:
     def __init__(self, doc_collection):
+        """ creates SearchEngine object with a class object of DocumentCollection
+        """
         self.doc_collection = doc_collection
 
     def ranked_documents(self, query):
+        """ creates a TextDocument object query with text = query, docs includes all documents with all tokens in query, docs_sims returns a list of cosine similarities, which in the end will be sorted and returned
+        """
         query_doc = TextDocument(query)
         query_tokens = query_doc.token_counts.keys()
         docs = self.doc_collection.docs_with_all_tokens(query_tokens)
@@ -113,6 +117,8 @@ class SearchEngine:
         return sorted(docs_sims, key=lambda x: -x[1])
 
     def snippets(self, query, document, window=50):
+        """ search for each token in query, return all contexts
+        """
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:

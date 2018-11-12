@@ -1,6 +1,8 @@
+import os
+
 from unittest import TestCase
 
-from hw04_text_search.text_vectors import TextDocument, DocumentCollection
+from text_vectors import TextDocument, DocumentCollection, SearchEngine
 
 
 class DocumentCollectionTest(TestCase):
@@ -8,12 +10,13 @@ class DocumentCollectionTest(TestCase):
     def setUp(self):
         test_doc_list = [TextDocument(text_and_id[0], text_and_id[1]) for text_and_id in
                          [("the cat sat on a mat", "doc1"),
-                          ("a rose is a rose", "doc2")]]
+                          ("a rose is a rose", "doc2"),
+                          ("a summer in New York", "doc3")]]
         self.small_collection = DocumentCollection.from_document_list(test_doc_list)
 
         # TODO: uncomment in case tests need access to whole document collection.
         # this_dir = os.path.dirname(os.path.abspath(__file__))
-        # document_dir = os.path.join(this_dir, os.pardir, 'data/enron/enron1/ham/')
+        # document_dir = os.path.join(this_dir, os.pardir, '../../Stirnlappenbasilisk/src/data/enron/enron1/ham/')
         # self.large_collection = DocumentCollection.from_dir(document_dir, ".txt")
 
     def test_unknown_word_cosine(self):
@@ -23,7 +26,13 @@ class DocumentCollectionTest(TestCase):
         # Some document from collection.
         collection_doc = self.small_collection.docid_to_doc["doc1"]
         # Similarity should be zero (instead of undefined).
-        self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0.)
+        self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0)
+
+    ### added test ###
+    def test_docs_with_all_tokens(self):
+        """ Quoted tokens must appear as entire strings """
+        collection_doc = self.small_collection.docid_to_doc["doc1"]
+        self.assertEqual(self.small_collection.docs_with_all_tokens(["a mat"]), [])
 
 
 class TextDocumentTest(TestCase):
@@ -32,5 +41,28 @@ class TextDocumentTest(TestCase):
 
 
 class SearchEngineTest(TestCase):
-    # TODO: Unittests for SearchEngine go here.
-    pass
+
+    def setUp(self):
+        test_doc_list = [TextDocument(text_and_id[0], text_and_id[1]) for text_and_id in
+                         [("the cat sat on a mat", "doc1"),
+                          ("a rose is a rose", "doc2"),
+                          ("a summer in New York", "doc3")]]
+        self.small_collection = DocumentCollection.from_document_list(test_doc_list)
+        self.test_engine = SearchEngine(self.small_collection.docid_to_doc["doc1"])
+
+        self.test_doc = TextDocument("the cat sat on a mat", "doc1")
+    ### added test ###
+    def test_snippets_no_substring(self):
+        """ Return only exact matches of query token, not substring matches """
+        self.assertIsNone(self.test_engine.snippets("at", self.test_doc))
+
+    ### If a query contains the same token multiple times, only show one text snippet for it ###
+    def test_snippets_no_dup(self):
+        """ If a query contains the same token multiple times, only show one text snippet for it """
+        self.assertEqual(self.test_engine.snippets("sat sat", self.test_doc), self.test_engine.snippets("sat", self.test_doc))
+
+
+# initially fail, and then pass after some functionality
+# of (any part of) THE INITIAL CODE has been changed/extended. In order to get full
+# credits, your test must FAIL ON THE INITIAL CODE, and pass on the changed
+# code

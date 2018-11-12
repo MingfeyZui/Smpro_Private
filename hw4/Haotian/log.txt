@@ -1,0 +1,5 @@
+added exp. sent. "a summer in new york" in test_text_search setUp for test_docs_with_all_tokens
+text_vectors cosine sim func changed for testing
+text_vectors import re
+in test_text_search imported SearchEngine
+

@@ -1,12 +1,11 @@
 from nltk import FreqDist, word_tokenize
 from collections import defaultdict
 import os, math
+import re
 
 
 def dot(dictA, dictB):
     """ returns dot product of dictA and dictB: multiplies values of their common attributes(frequency of token), if token does not exist in dictB, a default of 0 is used
-
-    cosine similarity?
 
     >>> dot({1:1, 2:2, 3:3}, {2:2, 3:3, 4:4})
     13
@@ -80,7 +79,10 @@ class DocumentCollection:
     def docs_with_all_tokens(self, tokens):
         """ returns a list of docids corresponding to documents with all the tokens present
         """
-        docids_for_each_token = [self.term_to_docids[token] for token in tokens]
+        if not re.match(re.compile("'.*'"), tokens[0]):
+            docids_for_each_token = [self.term_to_docids[token] for token in tokens]
+        else:
+            docids_for_each_token = [self.term_to_docids[tokens[0]]]
         docids = set.intersection(*docids_for_each_token)  # union?
         return [self.docid_to_doc[id] for id in docids]
 
@@ -98,7 +100,7 @@ class DocumentCollection:
         dotAB = dot(weightedA, weightedB)
         normA = math.sqrt(dot(weightedA, weightedA))
         normB = math.sqrt(dot(weightedB, weightedB))
-        return dotAB / (normA * normB)
+        return dotAB / (normA * normB) if (normA * normB) != 0 else 0
 
 
 class SearchEngine:
@@ -122,8 +124,10 @@ class SearchEngine:
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:
+            exact_token = " " + token + " "
             start = text.lower().find(token.lower())
-            if -1 == start:
+            if -1 == start or -1 == text.find(exact_token):
+                yield None
                 continue
             end = start + len(token)
             left = "..." + text[start - window:start]

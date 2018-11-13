@@ -30,7 +30,7 @@ class TextDocument:
         text und id, wobei id den default-wert None hat
         """
         self.text = text
-        self.token_counts = FreqDist(normalized_tokens(text))
+        self.token_counts = FreqDist(normalized_tokens(text))  # term_to_tf des Dokuments
         self.id = id
 
     @classmethod
@@ -64,8 +64,8 @@ class DocumentCollection:
         mit der gleichen Endung im angegeben Verzeichnis
         """
         files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
-        docs = [TextDocument.from_file(f) for f in files]
-        return cls.from_document_list(docs)
+        docs = [TextDocument.from_file(f) for f in files]  # Liste mit Objekten der Klasse TextDocument
+        return cls.from_document_list(docs)  # Aufruf der Methode from_document_list
 
     @classmethod
     def from_document_list(cls, docs):
@@ -73,22 +73,22 @@ class DocumentCollection:
         Erschafft Objekte der Klasse DocumentCollection und erstellt dictionaries, die document frequency und welcher
         term in welchem Dokument auftaucht, enthalten
         """
-        term_to_df = defaultdict(int) #wie oft kommt das wort in allen dokumenten vor??
-        term_to_docids = defaultdict(set)
-        docid_to_doc = dict()
+        term_to_df = defaultdict(int)  # wie oft kommt das wort in allen dokumenten vor
+        term_to_docids = defaultdict(set)  # in welchen Dokumenten kommt das Wort vor
+        docid_to_doc = dict()  # jedes Dokument bekommt eine doc_id
         for doc in docs:
             docid_to_doc[doc.id] = doc
-            for token in doc.token_counts.keys():
+            for token in doc.token_counts.keys():  # token_counts kommt von Klasse TextDocument
                 term_to_df[token] += 1
                 term_to_docids[token].add(doc.id)
-        return cls(term_to_df, term_to_docids, docid_to_doc)
+        return cls(term_to_df, term_to_docids, docid_to_doc)  # erstellt eine Obejkt der Klasse DocumentCollection
 
     def docs_with_all_tokens(self, tokens):
         """
         Gibt eine Liste mit doc_ids zurück, welche alle tokens beinhalten
         """
-        docids_for_each_token = [self.term_to_docids[token] for token in tokens]
-        docids = set.intersection(*docids_for_each_token)  # union?
+        docids_for_each_token = [self.term_to_docids[token] for token in tokens]  # Liste mit sets der doc_ids
+        docids = set.intersection(*docids_for_each_token)  # union?   Schnittmenge der sets
         return [self.docid_to_doc[id] for id in docids]
 
     def tfidf(self, counts):
@@ -97,24 +97,34 @@ class DocumentCollection:
         """
         N = len(self.docid_to_doc)
         return {tok: tf * math.log(N / self.term_to_df[tok]) for tok, tf in counts.items() if tok in self.term_to_df}
+        #  hokus pokus
 
     def cosine_similarity(self, docA, docB):
         """
         Berechnet den Cosinus zwischen 2 Dokumenten
         """
-        weightedA = self.tfidf(docA.token_counts)
+        weightedA = self.tfidf(docA.token_counts)  # token_counts ist term_to_tf
         weightedB = self.tfidf(docB.token_counts)
         dotAB = dot(weightedA, weightedB)
         normA = math.sqrt(dot(weightedA, weightedA))
         normB = math.sqrt(dot(weightedB, weightedB))
         return dotAB / (normA * normB)
+        # hokus pokus
 
 
 class SearchEngine:
     def __init__(self, doc_collection):
+        """
+        Erstellt ein Objekt der Klasse SearchEngine mit dem Attribut doc_collection
+        """
         self.doc_collection = doc_collection
 
     def ranked_documents(self, query):
+        """
+        macht aus der query ein Objekt der Klasse TextDocument
+        gibt eine sortierte Liste mit Tupeln (doc_id, cosinuswert) aller Dokumente zurück, welche alle wörter
+        der Suchanfrage beinhalten, sortiert nach Cosinus-Ähnlichkeit
+        """
         query_doc = TextDocument(query)
         query_tokens = query_doc.token_counts.keys()
         docs = self.doc_collection.docs_with_all_tokens(query_tokens)
@@ -122,6 +132,10 @@ class SearchEngine:
         return sorted(docs_sims, key=lambda x: -x[1])
 
     def snippets(self, query, document, window=50):
+        """
+        gibt für jedes token der query das erste Vorkommen des tokens im dokument wieder
+        das token steht dabei in [], und vor und nach dem Token werden jeweils 50 character aus dem Dokument angezeigt
+        """
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:

@@ -56,18 +56,17 @@ class SearchEngineTest(TestCase):
         self.test_engine = SearchEngine(self.small_collection.docid_to_doc["doc1"])
 
         self.test_doc = TextDocument("the cat sat on a mat", "doc1")
-    ### added test ###
+    ### added functional test ###
     def test_snippets_no_substring(self):
         """ Return only exact matches of query token, not substring matches """
-        self.assertIsNone(self.test_engine.snippets("at", self.test_doc))
+        for snippet in self.test_engine.snippets("at", self.test_doc):
+            self.assertIsNone(snippet)
 
-    ### If a query contains the same token multiple times, only show one text snippet for it ###
+    ### added functional test ###
     def test_snippets_no_dup(self):
         """ If a query contains the same token multiple times, only show one text snippet for it """
-        self.assertEqual(self.test_engine.snippets("sat sat", self.test_doc), self.test_engine.snippets("sat", self.test_doc))
+        for result1 in self.test_engine.snippets("sat sat", self.test_doc):
+            for result2 in self.test_engine.snippets("sat", self.test_doc):
+                self.assertEqual(result1, result2)
 
-
-# initially fail, and then pass after some functionality
-# of (any part of) THE INITIAL CODE has been changed/extended. In order to get full
-# credits, your test must FAIL ON THE INITIAL CODE, and pass on the changed
-# code
+        # self.assertEqual(self.test_engine.snippets("sat sat", self.test_doc), self.test_engine.snippets("sat", self.test_doc))

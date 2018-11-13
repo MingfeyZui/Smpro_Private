@@ -39,7 +39,12 @@ class TextDocument:
         """ returns a TextDocument object with text read from the file(filename) and filename as the doc id
         """
         with open(filename, 'r') as myfile:
-            text = myfile.read().strip()
+            # text = myfile.read().strip()
+            text = myfile.read()
+            while not text[0].isalpha():
+                text = text[1:]
+            while not text[-1].isalpha():
+                text = text[:-1]
         return cls(text, filename)
 
 

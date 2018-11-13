@@ -36,9 +36,14 @@ class DocumentCollectionTest(TestCase):
 
 
 class TextDocumentTest(TestCase):
-    # TODO: Unittests for TextDocument go here.
-    pass
+    ### added functional test ###
+    def setUp(self):
+        self.test_file = TextDocument.from_file("test_from_file_doc.txt")
 
+
+    def test_from_file(self):
+        """ Extra blank space after possible non-char will also be stripped """
+        self.assertEqual(self.test_file.text, "this is a sentence")
 
 class SearchEngineTest(TestCase):
 

@@ -54,7 +54,7 @@ class Employee:
 if __name__ == "__main__":
     print("Employee application")
 
-    leo = Employee(29, 001, "Leonhard", "Wabro", "IT-Service", 2500)
+    leo = Employee(29, 1, "Leonhard", "Wabro", "IT-Service", 2500)
     sepp = Employee(25, 2, "Sepp", "Huber", "IT-Service", 2500, True)
     elise = Employee(18, 3, "Elise", "Meyer", "Rezeption", 3000)
 
@@ -66,6 +66,6 @@ if __name__ == "__main__":
     print(leo, elise)
 
     sepp.change_department("Rezeption")
-    elise. change_salary(4000)
+    elise.change_salary(4000)
 
     print(sepp, elise)

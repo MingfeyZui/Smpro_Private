@@ -1,6 +1,6 @@
 import unittest
 
-from hw04_text_search.comprehensions import multiply_by, check_division, div_less, map_zip, word_to_length
+from comprehensions import multiply_by, check_division, div_less, map_zip, word_to_length
 
 
 class TestComprehensions(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestComprehensions(unittest.TestCase):
 
     def test_div_less(self):
         expected = {-2, -3, 5, 7, 43, 1343, 13, 113}
-        got = div_less(dict(self.numberList))
+        got = div_less(set(self.numberList))
         self.assertEqual(got, expected)
 
     def test_map_zip(self):

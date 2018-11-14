@@ -40,6 +40,6 @@ def word_to_length(list1):
     """
     Returns a dictionary mapping all words with at least 3 characters to their number of characters.
     """
-    return {word : len(word) for word in list1 if len(word) >= 3}
+    return {word: len(word) for word in list1 if len(word) >= 3}
 
 

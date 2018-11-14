@@ -108,7 +108,11 @@ class DocumentCollection:
         dotAB = dot(weightedA, weightedB)
         normA = math.sqrt(dot(weightedA, weightedA))
         normB = math.sqrt(dot(weightedB, weightedB))
-        return dotAB / (normA * normB)
+
+        if dotAB == 0:
+            return 0
+        else:
+            return dotAB / (normA * normB)
         # hokus pokus
 
 

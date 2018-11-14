@@ -34,6 +34,10 @@ class DocumentCollectionTest(TestCase):
         collection_doc = self.small_collection.docid_to_doc["doc1"]
         self.assertEqual(self.small_collection.docs_with_all_tokens(["a mat"]), [])
 
+    ### added test ###
+    def test_from_dir_abspath(self):
+        self.collection = DocumentCollection.from_dir("./data", ".txt")
+        self.assertEqual(self.collection.term_to_docids["cat"], {"/Users/yehaotian/Studium/SymPro/sympro_privat/hw4/Haotian/data/test_snippets_abspath_doc.txt"})
 
 class TextDocumentTest(TestCase):
     ### added functional test ###
@@ -68,5 +72,12 @@ class SearchEngineTest(TestCase):
         for result1 in self.test_engine.snippets("sat sat", self.test_doc):
             for result2 in self.test_engine.snippets("sat", self.test_doc):
                 self.assertEqual(result1, result2)
+
+    ### added test ###
+    # def test_snippets_abspath(self):
+    #     """"""
+    #     self.collection = DocumentCollection.from_dir(".", ".txt")
+    #
+    #     self.assertEqual(, "test_snippets_abspath_doc.txt")
 
         # self.assertEqual(self.test_engine.snippets("sat sat", self.test_doc), self.test_engine.snippets("sat", self.test_doc))

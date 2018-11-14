@@ -8,3 +8,5 @@ in test_text_search imported SearchEngine
 
 created test_from_file_doc.txt, added test accordingly to "TextDocumentTest"
 changed codes in text_vectors from_file
+
+added test test_from_dir_abspath, changed codes in DocCollection.from_dir

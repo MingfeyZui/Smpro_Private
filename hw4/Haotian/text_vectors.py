@@ -63,7 +63,8 @@ class DocumentCollection:
     def from_dir(cls, dir, file_suffix):
         """ creates DocumentCollection objects from files with suffix file_suffix in dir
         """
-        files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
+        files = [(os.path.abspath(dir) + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
+        # files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
         docs = [TextDocument.from_file(f) for f in files]
         return cls.from_document_list(docs)
 

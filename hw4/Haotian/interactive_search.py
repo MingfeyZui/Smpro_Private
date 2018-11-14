@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from hw04_text_search.text_vectors import DocumentCollection, SearchEngine
+from text_vectors import DocumentCollection, SearchEngine
 
 
 def main(argv):

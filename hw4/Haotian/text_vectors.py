@@ -40,7 +40,7 @@ class TextDocument:
         """
         with open(filename, 'r') as myfile:
             # text = myfile.read().strip()
-            text = myfile.read()
+            text = myfile.read()           # <- changed for unittesting
             while not text[0].isalpha():
                 text = text[1:]
             while not text[-1].isalpha():
@@ -63,7 +63,7 @@ class DocumentCollection:
     def from_dir(cls, dir, file_suffix):
         """ creates DocumentCollection objects from files with suffix file_suffix in dir
         """
-        files = [(os.path.abspath(dir) + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
+        files = [(os.path.abspath(dir) + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]  # <- changed for unittesting
         # files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
         docs = [TextDocument.from_file(f) for f in files]
         return cls.from_document_list(docs)
@@ -130,7 +130,7 @@ class SearchEngine:
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:
-            exact_token = " " + token + " "
+            exact_token = " " + token + " "              # <- changed for unittesting
             start = text.lower().find(token.lower())
             if -1 == start or -1 == text.find(exact_token):
                 yield None

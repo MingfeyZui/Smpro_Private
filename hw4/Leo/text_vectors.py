@@ -89,7 +89,11 @@ class DocumentCollection:
         """
         docids_for_each_token = [self.term_to_docids[token] for token in tokens]  # Liste mit sets der doc_ids
         docids = set.intersection(*docids_for_each_token)  # union?   Schnittmenge der sets
-        return [self.docid_to_doc[id] for id in docids]
+        if len(docids) == 0:
+            docids1 = docids_for_each_token[0]
+            return [self.docid_to_doc[id] for id in docids1]  # docs mit zumindest einem token
+        else:
+            return [self.docid_to_doc[id] for id in docids]  # docs mit allen token
 
     def tfidf(self, counts):
         """
@@ -138,11 +142,13 @@ class SearchEngine:
     def snippets(self, query, document, window=50):
         """
         gibt für jedes token der query das erste Vorkommen des tokens im dokument wieder
-        das token steht dabei in [], und vor und nach dem Token werden jeweils 50 character aus dem Dokument angezeigt
+        das token steht dabei in [], und vor und nach dem Token werden jeweils bis zu 50 character aus dem Dokument
+        angezeigt
         """
         tokens = normalized_tokens(query)
+        token_set = {i for i in tokens}
         text = document.text
-        for token in tokens:
+        for token in token_set:
             start = text.lower().find(token.lower())
             if -1 == start:
                 continue

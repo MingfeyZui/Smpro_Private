@@ -59,14 +59,14 @@ class SearchEngineTest(TestCase):
         self.small_collection = DocumentCollection.from_document_list(test_doc_list)
         self.test_engine = SearchEngine(self.small_collection.docid_to_doc["doc1"])
 
-        self.test_doc = TextDocument("the cat sat on a mat", "doc1")
+        self.test_doc = TextDocument("the cat sat on the mat", "doc1")
     ### added functional test ###
     def test_snippets_no_substring(self):
         """ Return only exact matches of query token, not substring matches """
-        for snippet in self.test_engine.snippets("at", self.test_doc):
+        for snippet in self.test_engine.snippets("th", self.test_doc):
             self.assertIsNone(snippet)
 
-    ### added functional test ###
+    ### added functional test ?? ###
     def test_snippets_no_dup(self):
         """ If a query contains the same token multiple times, only show one text snippet for it """
         for result1 in self.test_engine.snippets("sat sat", self.test_doc):

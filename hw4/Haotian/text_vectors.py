@@ -85,10 +85,11 @@ class DocumentCollection:
     def docs_with_all_tokens(self, tokens):
         """ returns a list of docids corresponding to documents with all the tokens present
         """
-        if not re.match(re.compile("'.*'"), tokens[0]):
-            docids_for_each_token = [self.term_to_docids[token] for token in tokens]
-        else:
-            docids_for_each_token = [self.term_to_docids[tokens[0]]]
+        # if not re.match(re.compile("'.*'"), tokens[0]):
+        #     docids_for_each_token = [self.term_to_docids[token] for token in tokens]
+        # else:
+        #     docids_for_each_token = [self.term_to_docids[tokens[0]]]
+        docids_for_each_token = [self.term_to_docids[token] for token in tokens]
         docids = set.intersection(*docids_for_each_token)  # union?
         return [self.docid_to_doc[id] for id in docids]
 
@@ -130,9 +131,12 @@ class SearchEngine:
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:
-            exact_token = " " + token + " "              # <- changed for unittesting
+            # exact_token = " " + token + " "              # <- changed for unittesting
+            # start = text.lower().find(token.lower())
+            # if -1 == start or -1 == text.find(exact_token.lower()):
             start = text.lower().find(token.lower())
-            if -1 == start or -1 == text.find(exact_token):
+            full_token = text[start-1:start+len(token)+1]
+            if -1 == start or not re.match("\b\w+\b", full_token):
                 yield None
                 continue
             end = start + len(token)

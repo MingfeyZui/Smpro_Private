@@ -60,10 +60,10 @@ class SearchEngineTest(TestCase):
         self.test_engine = SearchEngine(self.small_collection.docid_to_doc["doc1"])
 
         self.test_doc = TextDocument("the cat sat on the mat", "doc1")
-    ### added functional test ###
+    ### added functional test ?? ###
     def test_snippets_no_substring(self):
         """ Return only exact matches of query token, not substring matches """
-        for snippet in self.test_engine.snippets("th", self.test_doc):
+        for snippet in self.test_engine.snippets("at", self.test_doc):
             self.assertIsNone(snippet)
 
     ### added functional test ?? ###

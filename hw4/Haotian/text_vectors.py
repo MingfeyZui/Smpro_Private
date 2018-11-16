@@ -131,14 +131,21 @@ class SearchEngine:
         tokens = normalized_tokens(query)
         text = document.text
         for token in tokens:
-            # exact_token = " " + token + " "              # <- changed for unittesting
-            # start = text.lower().find(token.lower())
             # if -1 == start or -1 == text.find(exact_token.lower()):
+            spaced_token = " " + token + " "
             start = text.lower().find(token.lower())
-            full_token = text[start-1:start+len(token)+1]
-            if -1 == start or not re.match("\b\w+\b", full_token):
-                yield None
+            full_token = text.lower()[start-1:start+len(token)+1]
+            if start == -1:
                 continue
+            elif not re.match(r"\s\w+\s", full_token):
+                continue
+            # elif start == -1 and re.match("\b\w+\b", full_token):
+            #     end = start + len(token)
+            #     left = "..." + text[start - window:start]
+            #     middle = "[" + text[start: end] + "]"
+            #     right = text[end:end + window] + "..."
+            #     yield left + middle + right
+
             end = start + len(token)
             left = "..." + text[start - window:start]
             middle = "[" + text[start: end] + "]"

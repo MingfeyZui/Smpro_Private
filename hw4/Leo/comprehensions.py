@@ -24,7 +24,7 @@ def div_less(set1):
     Return a new set only containing numbers that can`t be divided by any other number (except itself)
     from the original set.
     """
-    return {i for i in set1 if (len([j for j in set1 if i % j == 0 and i != j]) == 0)}
+    return {i for i in set1 if len([j for j in set1 if i%j ==0 and i!=j])==0}
 
 
 def map_zip(list1, list2):

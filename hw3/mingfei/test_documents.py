@@ -1,6 +1,6 @@
 from unittest import TestCase
 from document import TextDocument, normalized_tokens
-
+    
 class TextDocumentTest(TestCase):
     def setUp(self):
         self.text_id1 = ("the fat cat sat on a mat", "doc1")

@@ -108,3 +108,6 @@ class SearchEngine:
             middle = "[" + text[start: end] + "]"
             right = text[end:end + window] + "..."
             yield left + middle + right
+
+
+

@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 #Unittest zuerst , dann funktions,
@@ -14,9 +15,9 @@ class DocumentCollectionTest(TestCase):
         self.small_collection = DocumentCollection.from_document_list(test_doc_list)
 
         # TODO: uncomment in case tests need access to whole document collection.
-        # this_dir = os.path.dirname(os.path.abspath(__file__))
-        # document_dir = os.path.join(this_dir, os.pardir, 'data/enron/enron1/ham/')
-        # self.large_collection = DocumentCollection.from_dir(document_dir, ".txt")
+        this_dir = os.path.dirname(os.path.abspath(__file__))
+        document_dir = os.path.join(this_dir, os.pardir, 'hw4/mingfei/enron/enron1/ham/')
+        self.large_collection = DocumentCollection.from_dir(document_dir, ".txt")
 
 # 注意self不要忽略, self 作为object 必须出现
     def test_unknown_word_cosine(self):
@@ -31,10 +32,16 @@ class DocumentCollectionTest(TestCase):
 
 class TextDocumentTest(TestCase):
     # TODO: Unittests for TextDocument go here.
-    
-    pass                
+    def test_from_file(self,test_doc_list):
+        pass
+
+
 
 
 class SearchEngineTest(TestCase):
     # TODO: Unittests for SearchEngine go here.
-    pass
+    def test_ranked_document(self):
+        pass
+    def test_snippets(self):
+        pass
+

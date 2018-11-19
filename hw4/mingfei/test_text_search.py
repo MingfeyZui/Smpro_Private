@@ -15,8 +15,20 @@ class DocumentCollectionTest(TestCase):
         self.small_collection = DocumentCollection.from_document_list(test_doc_list)
 
         # TODO: uncomment in case tests need access to whole document collection.
+        """ Return the directory name of pathname path. """
         this_dir = os.path.dirname(os.path.abspath(__file__))
+        """
+            Join one or more path components intelligently. 
+            The return value is the concatenation of path and 
+            any members of *paths with exactly one directory separator (os.sep) 
+            following each non-empty part except the last, 
+            meaning that the result will only end in a separator 
+            if the last part is empty. 
+            If a component is an absolute path, all previous components are thrown away 
+            and joining continues from the absolute path component.
+        """
         document_dir = os.path.join(this_dir, os.pardir, 'hw4/mingfei/enron/enron1/ham/')
+
         self.large_collection = DocumentCollection.from_dir(document_dir, ".txt")
 
 # 注意self不要忽略, self 作为object 必须出现
@@ -27,7 +39,13 @@ class DocumentCollectionTest(TestCase):
         # Some document from collection.
         collection_doc = self.small_collection.docid_to_doc["doc1"]
         # Similarity should be zero (instead of undefined).
-        self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0.)       #überprüft die funktionen durch 2 argumente
+        self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0.)
+        #überprüft die funktionen durch 2 argumente
+
+    
+
+
+
 
 
 class TextDocumentTest(TestCase):

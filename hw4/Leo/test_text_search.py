@@ -26,7 +26,7 @@ class DocumentCollectionTest(TestCase):
         self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0.)
 
     def test_docs_with_not_all_tokens(self):
-        """Wenn es kein Dokument mit allen terms gibt, gib zumindest docs mit einem term aus, von links nach rechts"""
+        """Wenn es kein Dokument mit allen Wörtnern der query gibt, gib zumindest docs mit einem term aus, von links nach rechts"""
         tokens = ["rose", "cat"]
         self.assertEqual(self.small_collection.docs_with_all_tokens(tokens), [self.small_collection.docid_to_doc["doc2"]])
 
@@ -44,11 +44,10 @@ class SearchEngineTest(TestCase):
                           ("a rose is a rose", "doc2")]]
         self.small_collection = DocumentCollection.from_document_list(test_doc_list)
 
-
     def test_count_snippets(self):
         """Testet, ob nur 1 snippet für jedes individuelle token zurückgegeben wird"""
         collection_doc = self.small_collection.docid_to_doc["doc1"]
         counter = 0
-        for snippet in SearchEngine.snippets(self, "cat mat cat", collection_doc, window = 50):
+        for snippet in SearchEngine.snippets(self, "cat mat cat", collection_doc, window=50):
             counter += 1
         self.assertEqual(counter, 2)

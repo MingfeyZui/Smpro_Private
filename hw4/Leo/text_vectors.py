@@ -5,6 +5,9 @@ import os, math
 
 def dot(dictA, dictB):
     """
+    Gibt die Summe der multiplizierten values für die keys der dictionaries aus, aber nur wenn der key in beiden
+    dictionaries vorhanden ist
+
     >>> dot({"001":3, "002":8, "003":2, "004":14}, {"001":8, "002":2, "003":12})
     64
     >>> dot({"first": 0.5, "second": 2.5, "third": 0.05}, {"first": 3, "second": 5})

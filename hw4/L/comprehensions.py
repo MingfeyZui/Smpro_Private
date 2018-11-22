@@ -1,12 +1,12 @@
 # This exercise contains 5 Tasks to practice a powerful feature of Python: comprehensions.
 # With these, multiple-line for-loop constructions can be expressed in expressive one-liners.
-
+import operator, functools
 
 def multiply_by(x, list1):
     """
     Multiplies each value in list1 by x and returns it as a new list.
     """
-    return [i * x for i in list1]
+    return [elem * x for elem in list1]
 
 
 def check_division(x, list1):
@@ -22,7 +22,8 @@ def div_less(set1):
     Return a new set only containing numbers that can`t be divided by any other number (except itself)
     from the original set.
     """
-    return {i for i in set1 if len([j for j in set1 if i%j == 0 and i != j]) == 0}
+    return {int(x) for x in set1 if (x % y != 0 for y in range(0,x))}
+    #WTF des nicht arbeitend??? O.o
 
 def map_zip(list1, list2):
     """
@@ -30,11 +31,20 @@ def map_zip(list1, list2):
     Make use of the 'zip()' function in your dictionary comprehension, that can handle lists of different sizes
     automatically.
     """
-    return {tup[0]:tup[1] for tup in zip(list1, list2)}
+    return {tupel[0] : tupel[1] for tupel in zip(list1,list2)}
 
 
 def word_to_length(list1):
     """
     Returns a dictionary mapping all words with at least 3 characters to their number of characters.
     """
-    return {word:len(word) for word in list1 if len(word) >= 3}
+    return {w : len(w) for w in list1 if not(len(w) < 3)}
+#
+#
+#return [i * x for i in list1]
+#return [True if i%x == 0 else False for i in list1]
+#return {i for i in set1 if len([j for j in set1 if i%j == 0 and i != j]) == 0}
+#return {tup[0]:tup[1] for tup in zip(list1, list2)}
+#return {word:len(word) for word in list1 if len(word) >= 3}
+#
+#

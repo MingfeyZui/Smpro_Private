@@ -1,6 +1,6 @@
 import unittest
 
-from hw04_text_search.comprehensions import multiply_by, check_division, div_less, map_zip, word_to_length
+from comprehensions import multiply_by, check_division, div_less, map_zip, word_to_length
 
 
 class TestComprehensions(unittest.TestCase):

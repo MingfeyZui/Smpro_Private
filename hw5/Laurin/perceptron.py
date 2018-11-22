@@ -1,8 +1,8 @@
 import copy
 import json
 
-def dot(dictA, dictB):
-    return sum([dictA.get(tok) * dictB.get(tok,0) for tok in dictA])
+from utils.documents import dot
+
 
 class PerceptronClassifier:
     def __init__(self, weights):

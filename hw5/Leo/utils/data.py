@@ -9,8 +9,8 @@ class DataInstance:
 
     @classmethod
     def from_document(cls, doc, vocab):
-        """ Creates feature counts for all words in document (if they are conatained in the vocabulary)."""
-        feature_counts = {word:count for word, count in doc.token_counts.items() if word in vocab}
+        """ Creates feature counts for all words in document (if they are contained in the vocabulary)."""
+        feature_counts = {word: count for word, count in doc.token_counts.items() if word in vocab}
         return cls(feature_counts, doc.label)
 
 class Dataset:
@@ -29,8 +29,8 @@ class Dataset:
         """ Creates a data set from a document collection. The maximal number of most frequent features can be specified."""
         if None == feature_set:
             words_by_frequency = sorted(doc_collection.term_to_df.items(), key=lambda x: -x[1])[:num_features]
-            feature_set = {word for word, freq in words_by_frequency}
-        instance_list = [DataInstance.from_document(doc, feature_set) for doc in doc_collection.all_documents()]
+            feature_set = {word for word, freq in words_by_frequency}  #set mit allen wörtern
+        instance_list = [DataInstance.from_document(doc, feature_set) for doc in doc_collection.all_documents()]  #feature_set wird vocab von DataInstance.from_document
         return cls(instance_list, feature_set)
 
     def most_frequent_sense_accuracy(self):

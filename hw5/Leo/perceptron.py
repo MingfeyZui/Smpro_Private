@@ -1,7 +1,8 @@
+
 import copy
 import json
 
-from hw05_perceptron.utils.documents import dot
+from utils.documents import dot
 
 
 class PerceptronClassifier:
@@ -14,24 +15,33 @@ class PerceptronClassifier:
         """
         Load model file and construct PerceptronClassifier.
         """
-        # TODO: Open and read form file at "filename"
-        # weights = json.load(modelfile)
-        return cls({})
+        with open(filename, "r") as modelfile:
+            weights = json.load(modelfile)
+        return cls(weights)
 
     @classmethod
-    def from_dataset(cls, dataset):  # TODO
+    def from_dataset(cls, dataset):
         """
         Initialize PerceptronClassifier for dataset. A classifier that
         is constructed with this method still needs to be trained..
         """
-        return cls({})  # TODO: Exercise 1
+        weights = {}
+
+        for item in dataset.feature_set:
+            weights[item] = 0
+
+        return cls(weights)
 
     def prediction(self, counts):  # TODO
         """
         Return True if prediction for counts is ham, False if prediction is spam
         counts: Bag of words representation of email
         """
-        return 0  # TODO: Exercise 2
+        if dot(counts, self.weights) > 0:
+            return 1
+        else:
+            return -1
+
 
     def update(self, instance):  # TODO
         """
@@ -39,10 +49,11 @@ class PerceptronClassifier:
         Return a boolean value indicating whether an update was performed.
         """
         predicted_output = self.prediction(instance.feature_counts)
-        error = 0  # TODO: Exercise 3: Replace with correct calculation of error
+        error = predicted_output - instance.label  # TODO: Exercise 3: Replace with correct calculation of error
         do_update = error != 0
         if do_update:
             for feature, count in instance.feature_counts.items():
+
                 pass  # TODO: Exercise 3: Replace pass with update of feature weights
         return do_update
 

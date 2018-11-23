@@ -1,11 +1,20 @@
+# Begrifferklärung
+# feature_counts (string -> int) int = anzahl vorkommen
+    # feature vector • weight vector = score
+    # feature_counts[feature] • weights[feature] = score for feature
+# weights = dict(token:value)
+# feature_set = {tokens}
+# instance = ClassObj w/ {token:vorkommen} & Label(pos/neg) True(1) = ham False(-1) = spam
+# instance_list = [instance objects]
+
 import copy
 import json
 
-from hw05_perceptron.utils.documents import dot
+from utils.documents import dot
 
 
 class PerceptronClassifier:
-    def __init__(self, weights):
+    def __init__(self, weights):    # weights = dict(token:value)
         # string to int
         self.weights = weights
 
@@ -16,7 +25,9 @@ class PerceptronClassifier:
         """
         # TODO: Open and read form file at "filename"
         # weights = json.load(modelfile)
-        return cls({})
+        with open(filename, "r") as modelfile:
+            weights = json.load(modelfile)
+        return cls(weights)
 
     @classmethod
     def from_dataset(cls, dataset):  # TODO
@@ -24,14 +35,19 @@ class PerceptronClassifier:
         Initialize PerceptronClassifier for dataset. A classifier that
         is constructed with this method still needs to be trained..
         """
-        return cls({})  # TODO: Exercise 1
+        # dataset has instlist and featSet, needs a weight
+
+        return cls({token:0 for token in dataset.feature_set})
 
     def prediction(self, counts):  # TODO
         """
         Return True if prediction for counts is ham, False if prediction is spam
         counts: Bag of words representation of email
         """
-        return 0  # TODO: Exercise 2
+        if sum([counts[tok]*self.weights[tok] for tok in counts]) > 0:
+            return 1
+        return -1  # TODO: Exercise 2
+
 
     def update(self, instance):  # TODO
         """
@@ -39,19 +55,31 @@ class PerceptronClassifier:
         Return a boolean value indicating whether an update was performed.
         """
         predicted_output = self.prediction(instance.feature_counts)
-        error = 0  # TODO: Exercise 3: Replace with correct calculation of error
+        if predicted_output == 1 and instance.label == -1:
+            error = 1
+        elif predicted_output == -1 and instance.label == 1:
+            error = -1
+        else:  # TODO: Exercise 3: Replace with correct calculation of error
+            error = 0
         do_update = error != 0
         if do_update:
             for feature, count in instance.feature_counts.items():
-                pass  # TODO: Exercise 3: Replace pass with update of feature weights
+                # TODO: Exercise 3: Replace pass with update of feature weights
+                #? w = w − error · x
+                # predicted_output -= error * count
+
+                self.weights[feature] -= error*count
+                # self.weights[feature] -= error #(error*count?) # for feature in weights update the weight
         return do_update
+
+########################## bearbeiten nicht nötig ############################
 
     def training_iteration(self, dataset):
         """
         Iterate over each instance of dataset and perform perceptron update.
         Return number of updates that were performed (number of train errors).
         """
-        dataset.shuffle()
+        dataset.shuffle()   # shuffles list of instances
         for instance in dataset.instance_list:
             self.update(instance)
 
@@ -62,12 +90,12 @@ class PerceptronClassifier:
         best_dev_accuracy = 0.0
         best_weights = self.weights
         for i in range(iterations):
-            self.training_iteration(training_set)
-            train_accuracy = self.test_accuracy(training_set)
-            development_accuracy = self.test_accuracy(development_set)
+            self.training_iteration(training_set)   # update weights with training set
+            train_accuracy = self.test_accuracy(training_set)   # calculate accuracy for updated training set
+            development_accuracy = self.test_accuracy(development_set)  # check effect with dev set
             if development_accuracy > best_dev_accuracy:
                 best_dev_accuracy = development_accuracy
-                best_weights = self.weights.copy()
+                best_weights = self.weights.copy()  # returns updated weights
             print("Iteration: %d \t Train Accuracy: %.4f \t Dev Accuracy: %.4f \t Best Dev Accuracy: %.4f" % (
                 i, train_accuracy, development_accuracy, best_dev_accuracy))
         self.weights = best_weights
@@ -81,7 +109,7 @@ class PerceptronClassifier:
         for instance in dataset.instance_list:
             if self.prediction(instance.feature_counts) != instance.label:
                 num_errors += 1
-        return 1 - num_errors / len(dataset.instance_list)
+        return 1 - num_errors / len(dataset.instance_list)  # returns percentage of correctly identified instance
 
     def copy(self):
         """

@@ -10,7 +10,8 @@ class DataInstance:
     @classmethod
     def from_document(cls, doc, vocab):
         """ Creates feature counts for all words in document (if they are conatained in the vocabulary)."""
-        feature_counts = {word:count for word, count in doc.token_counts.items() if word in vocab}
+        feature_counts = {word:count for word, count in doc.token_counts.items() if word in vocab}  # vocab?
+                                                        # token_counts = dict(token:0-freq)
         return cls(feature_counts, doc.label)
 
 class Dataset:

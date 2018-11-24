@@ -24,7 +24,9 @@ class DocumentCollectionTest(TestCase):
             following each non-empty part except the last, 
             meaning that the result will only end in a separator 
             if the last part is empty. 
-            If a component is an absolute path, all previous components are thrown away 
+            
+            重要：If a component is an absolute path, 
+            all previous components are thrown away 
             and joining continues from the absolute path component.
         """
         document_dir = os.path.join(this_dir, os.pardir, 'hw4/mingfei/enron/enron1/ham/')
@@ -39,6 +41,8 @@ class DocumentCollectionTest(TestCase):
         # Some document from collection.
         collection_doc = self.small_collection.docid_to_doc["doc1"]
         # Similarity should be zero (instead of undefined).
+        """assertEqual() check  """
+
         self.assertEqual(self.small_collection.cosine_similarity(query_doc, collection_doc), 0.)
         #überprüft die funktionen durch 2 argumente
 

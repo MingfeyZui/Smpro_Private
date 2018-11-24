@@ -55,8 +55,11 @@ class DocumentCollection:
         Instantiate a DocumentCollection.
 
         :param term_to_df: Dict of all tokens with their document frequency.
+                {token, docFreq}
         :param term_to_docids: Dict of all tokens with a set of documents they appear in.
+                {token, set(token in docu)}
         :param docid_to_doc: Dict of all document ids with their corresponding document.
+                {docId, docu}
         :return: The newly created DocumentCollection.
         """
         # string to int # dict{string, int}
@@ -78,6 +81,7 @@ class DocumentCollection:
         """
         files = [(dir + "/" + f) for f in os.listdir(dir) if f.endswith(file_suffix)]
         docs = [TextDocument.from_file(f) for f in files]
+        #document collection von documents
         return cls.from_document_list(docs)
 
     # from the doc_list got
@@ -92,8 +96,9 @@ class DocumentCollection:
         term_to_df = defaultdict(int)
         term_to_docids = defaultdict(set)
         docid_to_doc = dict()
+        #durchlauf alle documents
         for doc in docs:
-            docid_to_doc[doc.id] = doc
+            docid_to_doc[doc.id] = doc  #doc.id kann man die doc holen damit weiter zu bearbeiten
             for token in doc.token_counts.keys():
                 term_to_df[token] += 1
                 term_to_docids[token].add(doc.id)
@@ -109,7 +114,7 @@ class DocumentCollection:
         :param query_doc: The doc of the query.
         :return: A list of documents that contain any of the tokens or the whole query if quoted.
         """
-        docids_for_each_token = [self.term_to_docids[token] for token in tokens]
+        docids_for_each_token = [self.term_to_docids[token] for token in tokens]        #all begriff in suchfrage, token in welche doc (doc id) vorkommen
         docids = set.intersection(*docids_for_each_token)  # unpack all the ele in the list as seperate arguments
         return [self.docid_to_doc[id] for id in docids]
 
@@ -147,7 +152,7 @@ class DocumentCollection:
 
 
 
-# 
+
 class SearchEngine:
     def __init__(self, doc_collection):
         """

@@ -1,8 +1,8 @@
 import random
 
-from utils.data import Dataset
-from utils.documents import TextDocument, DocumentCollection
-from perceptron import PerceptronClassifier
+from hw5.mingfei.utils.data import Dataset
+from hw5.mingfei.utils.documents import TextDocument, DocumentCollection
+from hw5.mingfei.perceptron import PerceptronClassifier
 
 from nltk.corpus import movie_reviews
 
@@ -14,10 +14,14 @@ def load_reviews():
     reviews = [TextDocument(movie_reviews.raw(fileids=[id]), id, 1) for id in posids] + \
               [TextDocument(movie_reviews.raw(fileids=[id]), id, -1) for id in negids]
     # Get reproducible data split by setting a deterministic seed for the random number generator.
-    random.Random(0).shuffle(reviews)
+    """random. random ( )
+    Return the next random floating point number in the range [0.0, 1.0).
+    
+    """   #?????????
+    random.Random(0).shuffle(reviews)       #Random(0)
 
     # First 60% of data is for training.
-    start_dev = int(0.6 * len(reviews))
+    start_dev = int(0.6 * len(reviews))   #integervalue: um die position von start von dev
     # Next 20% is for development (hyper-parameter tuning).
     start_test = int(0.8 * len(reviews))
     # ... last 20% are for testing.
@@ -30,7 +34,7 @@ def load_reviews():
 
 def nltk_movie_review_accuracy(num_iterations):
     """ Try different number of features, and optimize number of training iterations."""
-    return 0, 0  # TODO: Exercise 4: remove line
+    #return 0, 0  # TODO: Exercise 4: remove line
     (training_documents, dev_documents, test_documents) = load_reviews()
 
     best_development_accuracy = 0.0

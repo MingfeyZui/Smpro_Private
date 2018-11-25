@@ -1,8 +1,8 @@
 from unittest import TestCase
-from utils.documents import TextDocument, DocumentCollection
-from utils.data import Dataset, DataInstance
-from perceptron import PerceptronClassifier
-from sentiment import nltk_movie_review_accuracy
+from hw5.mingfei.utils.documents import TextDocument, DocumentCollection
+from hw5.mingfei.utils.data import Dataset, DataInstance
+from hw5.mingfei.perceptron import PerceptronClassifier
+from hw5.mingfei.sentiment import nltk_movie_review_accuracy
 
 # Ham mails: 1 (positive data)
 # Spam mails: -1 (negative data)

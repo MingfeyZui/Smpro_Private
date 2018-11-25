@@ -1,8 +1,8 @@
 import random
 
-from hw05_perceptron.utils.data import Dataset
-from hw05_perceptron.utils.documents import TextDocument, DocumentCollection
-from hw05_perceptron.perceptron import PerceptronClassifier
+from utils.data import Dataset
+from utils.documents import TextDocument, DocumentCollection
+from perceptron import PerceptronClassifier
 
 from nltk.corpus import movie_reviews
 
@@ -30,8 +30,9 @@ def load_reviews():
 
 def nltk_movie_review_accuracy(num_iterations):
     """ Try different number of features, and optimize number of training iterations."""
-    return 0, 0  # TODO: Exercise 4: remove line
+    # return 0, 0  # TODO: Exercise 4: remove line
     (training_documents, dev_documents, test_documents) = load_reviews()
+
 
     best_development_accuracy = 0.0
     best_num_features = 0
@@ -48,7 +49,10 @@ def nltk_movie_review_accuracy(num_iterations):
 
         # Train classifier
         classifier = PerceptronClassifier.from_dataset(training_set)
-        pass  # TODO: Exercise 4: train the classifier
+        #pass  # TODO: Exercise 4: train the classifier
+############################# added ###############################
+        classifier.train(training_set, development_set, num_iterations)
+############################# added ###############################
 
         # Accuracies of classifier with n features
         train_accuracy = classifier.test_accuracy(training_set)

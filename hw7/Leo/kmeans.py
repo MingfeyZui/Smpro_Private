@@ -12,22 +12,40 @@ class Reader:
 
     def get_lines(self):
         #TODO return list of courses from file
-        pass
+        lines = []
+        with open("../data/courses.txt", "r") as file:
+            for line in file:
+                line = line.strip()
+                lines.append(line)
+        return lines
 
     def normalize_word(self,word):
         #TODO normalize word by lower casing and deleting punctuation from word
         #TODO use set of punctuation symbols self.punctuation
-        pass
+        return word.lower().strip(string.punctuation)
 
     def get_vocabulary(self):
         #TODO return list of unique words from file and sort them alphabetically
-        pass
+        vocab = set()
+        for line in self.courses:
+            line = line.split()
+            for i in line:
+                vocab.add(self.normalize_word(i))
+
+        return sorted(vocab)
 
     def vectorspaced(self,course):
         #TODO represent course by one-hot vector: vector filled with 0s, except for a 1 at the position associated with word in vocabulary
         #TODO length of vector should be equal vocabulary size
-        pass
+        liste = []
+        course_words = course.lower().split()
+        for word in self.get_vocabulary():
+            if word in course_words:
+                liste.append(1)
+            else:
+                liste.append(0)
 
+        return liste
 
     def data_to_vectorspace(self):
         return [self.vectorspaced(course) for course in self.courses if course]
@@ -41,15 +59,17 @@ class Kmeans:
 
     def distance(self, x,y):
         #TODO calculate Euclidean distance between two vectors x and y
-        pass
+
+        return np.linalg.norm(np.array(x)-np.array(y))
 
     def classify(self,input):
         #TODO calculate Euclidean distances between input and the means and return the mean index with min distance
-        pass
+        return 0
 
     def vector_mean(self,vectors):
         #TODO calculate mean of the list of vectors
-        pass
+
+        return list(np.mean(np.array(vectors), axis=0))
 
     def train(self, inputs):
         # choose k random points as the initial means

@@ -48,7 +48,7 @@ def nltk_movie_review_accuracy(num_iterations):
 
         # Train classifier
         classifier = PerceptronClassifier.from_dataset(training_set)
-        classifier.train(training_set, development_set, 10)
+        classifier.train(training_set, development_set, num_iterations)
 
         # Accuracies of classifier with n features
         train_accuracy = classifier.test_accuracy(training_set)

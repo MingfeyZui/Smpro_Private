@@ -1,11 +1,11 @@
 from unittest import TestCase
-from hw08_nltk.analyze import Analyzer
+from analyze import Analyzer
 from nltk import FreqDist
 
 class AnalyzerTest(TestCase):
     
     def setUp(self):
-        path = "data/ada_lovelace.txt"
+        path = "../data/ada_lovelace.txt"
         self.analyzer = Analyzer(path)
     
     def constructor(self):

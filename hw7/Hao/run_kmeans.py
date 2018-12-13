@@ -1,5 +1,5 @@
-from hw07_kmeans.kmeans import Reader
-from hw07_kmeans.kmeans import Kmeans
+from kmeans import Reader
+from kmeans import Kmeans
 
 
 filename= "../data/courses.txt"

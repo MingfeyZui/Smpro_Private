@@ -23,6 +23,14 @@ class Reader:
         #TODO normalize word by lower casing and deleting punctuation from word
         #TODO use set of punctuation symbols self.punctuation
         #pass
+
+        # String.join  von String Klasse: nimmt argument eine sequenz von string
+        #todo:MUSTERLÖSUNG
+        new_word = "".join(letter.lower() for letter in word if letter not in self.punctuation )
+        return new_word
+
+
+
         word = word.lower()
         for p in self.punctuation:
             word = word.replace(p, '')
@@ -30,6 +38,16 @@ class Reader:
         
     def get_vocabulary(self):
         #TODO return list of unique words from file and sort them alphabetically
+
+        #todo:MUSTERLÖSUNG
+        #{} set :elimieren die Duplikation
+        return sorted({self.normalize_word(course.split()) for course in self.courses})
+
+
+
+
+
+
         #pass
         word_list = []
         for line in self.get_lines():
@@ -44,7 +62,16 @@ class Reader:
     def vectorspaced(self,course):
         #TODO represent course by one-hot vector: vector filled with 0s, except for a 1 at the position associated with word in vocabulary
         #TODO length of vector should be equal vocabulary size
-        hot_one_vectors = [1 if word in self.normalize_word(course).split(' ') else 0 for word in self.vocabulary] #<-- TODO: replace 
+
+        #todo:MUSTERLÖSUNG
+        course_words= [self.normalize_word(w) for w in course.split()]
+        #int function: int(TRUE) => 1; int(FALSE) => 0
+        #type(course_words)
+        return [int(word in course_words) for word in self.vocabulary]
+
+
+
+        hot_one_vectors = [1 if word in self.normalize_word(course).split(' ') else 0 for word in self.vocabulary] #<-- TODO: replace
         return array(hot_one_vectors)
 
     def data_to_vectorspace(self):

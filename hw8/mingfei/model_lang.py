@@ -11,6 +11,7 @@ class LangModeler(object):
         # hint: use nltk.ConditionalFreqDist
         pass
 
+
     def guess_language(self,language_model_cfd, text):
         """Returns the guessed language for the given text"""
 

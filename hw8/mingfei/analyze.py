@@ -47,7 +47,7 @@ class Analyzer(object):
         '''returns the 10 most frequent 2-letter suffixes in words
             (restrict to words of length 5 or more)'''
         suffixes= []
-        for langWord in self.text:
+        for langWord in self.token_counts.keys():
             if len(langWord) >= 5:
                 suffixes.append(langWord[-2:])
         return [word for word,count in Counter(suffixes).most_common(10)]
@@ -57,14 +57,17 @@ class Analyzer(object):
         '''returns the 10 most frequent 2-letter prefixes in words
             (restrict to words of length 5 or more)'''
         suffixes= []
-        for langWord in self.text:
+        for langWord in self.token_counts.keys():
             if len(langWord) >= 5:
                 suffixes.append(langWord[:2])
         return [word for word,count in Counter(suffixes).most_common(10)]
-    
+        #return sorted([word for word,count in Counter(suffixes).most_common(10)])
+
+
+
     def tokensTypical(self):
         """TODO returns first 5 tokens of the (alphabetically sorted) vocabulary 
-        that contain both often seen prefixes and suffixes in the text. As in topPrefixes()
+        that contain both often sccleen prefixes and suffixes in the text. As in topPrefixes()
         and topSuffixes(), Prefixes and Suffixes are 2 characters long."""
         pass
                 

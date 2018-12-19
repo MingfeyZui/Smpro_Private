@@ -1,6 +1,6 @@
 from unittest import TestCase
-from kmeans import Reader
-from kmeans import Kmeans
+from hw7.Hao.kmeans import Reader
+from hw7.Hao.kmeans import Kmeans
 
 
 

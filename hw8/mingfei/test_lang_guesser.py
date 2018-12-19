@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hw08_nltk.model_lang import LangModeler
+from hw8.mingfei.model_lang import LangModeler
 from nltk.corpus import udhr
 #run with  python3 -m unittest -v hw08_nltk/test_lang_guesser.py
 

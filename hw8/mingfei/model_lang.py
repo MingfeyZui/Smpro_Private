@@ -19,14 +19,27 @@ class LangModeler(object):
         #based on the frequency of words accessible by language_model_cfd[language].freq(word) and then
         #identify most likely language for a given text according to this score
 
+        """
 
-        prob =[]
+        probs =[]
         words = nltk.tokenize(text)
         for word in words:
             for lang in self.languages:
+                word_prob = language_model_cfd[lang].freq[word]
+                probs.append(word_prob)
 
-                word_prob=language_model_cfd[lang].freq[word]
-                prob.append(word_prob)
-        probDist = nltk.ConditionalProbDist(lang,prob for lang in self.languages)
+        probDist = nltk.ConditionalProbDist((lang,prob) for lang in self.languages for prob in probs)
+        return list(probDist.keys())[0]
+        """
 
-        return probDist.
+        #Musterlösung
+        max_score= 0
+        best_lang= ""
+        for lang in language_model_cfd.conditions():
+            score= 0
+            for word in nltk.word_tokenize(text):
+                score += language_model_cfd[lang].freq(word)
+            if score > max_score:
+                max_score = score
+                best_lang = lang
+        return best_lang

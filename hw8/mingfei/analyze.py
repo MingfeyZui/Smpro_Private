@@ -64,7 +64,6 @@ class Analyzer(object):
         #return sorted([word for word,count in Counter(suffixes).most_common(10)])
 
 
-
     def tokensTypical(self):
         """TODO returns first 5 tokens of the (alphabetically sorted) vocabulary 
         that contain both often sccleen prefixes and suffixes in the text. As in topPrefixes()

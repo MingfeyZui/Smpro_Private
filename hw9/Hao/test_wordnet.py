@@ -1,7 +1,7 @@
 from unittest import TestCase
 from nltk.corpus import wordnet
-from noun_similarity import get_similarity_scores,leave_odd_man_out
-from find_hyponyms import HyponymSearcher
+from hw9.Hao.noun_similarity import get_similarity_scores,leave_odd_man_out
+from hw9.Hao.find_hyponyms import HyponymSearcher
 
 
 class WordnetTest(TestCase):

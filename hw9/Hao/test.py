@@ -1,14 +1,19 @@
 #!/usr/local/bin/python3
 import nltk
 from nltk.corpus import wordnet
-import itertools
 
-# dog_syn = wordnet.synsets("dog","n")[0]
-# cat_syn = wordnet.synsets("cat", "n")[0]
+# dog_syn = wordnet.synsets("dog",pos="n")[0]
+# canine = wordnet.synsets("canine",pos="n")[0]
 
-# print(dog_syn.path_similarity(cat_syn))
-li = ["huuo-hello","world-aii","ghiii-hio"]
+print(1 in {1,2,3})
 
-for item in li:
-    item = item.split("-")
-print(li)
+# all_hypernyms = []
+# for hypernym in son.hypernyms():
+#     all_hypernyms.append(hypernym)
+#     all_hypernyms += hypernym.hypernyms()
+# print(all_hypernyms)
+# hypernyms_rel = []
+# for hypernym in relative.hypernyms():
+#     hypernyms_rel.append(hypernym)
+#     hypernyms_rel += hypernym.hypernyms()
+# print(hypernyms_rel)

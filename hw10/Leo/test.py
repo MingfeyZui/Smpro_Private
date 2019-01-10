@@ -38,4 +38,5 @@ for key, value in dic.items():
         not_homograph.append(key)
 for word in not_homograph:
     del dic[word]
-print(len(dic))
+
+print(dic)

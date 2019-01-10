@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hw10_crawling.analyze_article import *
+from analyze_article import *
 
 
 

@@ -54,9 +54,9 @@ def filter_dict_homographs(word_dict_h):
 def find_homographs(tokens):
     #TODO return a dictionary which holds homographs'''
     dic = get_pos_dict(tokens)
-    filtered_dic = filter_dict_homographs(dic)
+    filter_dict_homographs(dic)
 
-    return list(filtered_dic)
+    return dic
 
 
 

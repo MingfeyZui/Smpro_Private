@@ -15,7 +15,7 @@ for p in soup.find_all('p'):
     paragraphs.append(p.get_text())
     text = '\n'.join(paragraphs)
 
-print(text)
+#print(text)
 
 stopWords = set(nltk.corpus.stopwords.words('english'))
 
@@ -32,11 +32,25 @@ for k, v in tags:
 
 print(dic)
 
-not_homograph = []
-for key, value in dic.items():
-    if len(value) == 1:
-        not_homograph.append(key)
-for word in not_homograph:
-    del dic[word]
+def get_pos_dict(tokens):
+    #TODO return a dictionary of homographs (a dictionary of words and their possible POS)
+    tags = nltk.pos_tag(tokens)
+    pos_dict = defaultdict(set)
+    for word, tag in tags:
+        pos_dict[word].add(tag)
 
+    return pos_dict
+
+def filter_dict_homographs(word_dict_h):
+    #TODO delete an entry from dictionary, if not a homograph
+    non_homograph = []
+    for key, value in word_dict_h.items():
+        if len(value) == 1:
+            non_homograph.append(key)
+
+    for word in non_homograph:
+        del word_dict_h[word]
+
+
+filter_dict_homographs(dic)
 print(dic)

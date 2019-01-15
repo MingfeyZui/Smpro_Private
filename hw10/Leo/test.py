@@ -1,56 +1,42 @@
 #!/usr/local/bin/python3
 
 import nltk
-import urllib.request
-from bs4 import BeautifulSoup
-from collections import defaultdict
+import spacy
 
-url = urllib.request.urlopen("http://www.nytimes.com/2013/04/07/automobiles/autoreviews/hybrid-drivers-wanted.html?_r=0")
-html = url.read().decode("utf-8")
-
-soup = BeautifulSoup(html, 'html.parser')
-paragraphs = []
-for p in soup.find_all('p'):
-    #print(p.get_text())
-    paragraphs.append(p.get_text())
-    text = '\n'.join(paragraphs)
-
-#print(text)
-
-stopWords = set(nltk.corpus.stopwords.words('english'))
-
-tokens = [token for token in nltk.word_tokenize(text.lower()) if token not in stopWords]
-#print(tokens)
+model = spacy.load('en_core_web_sm')
+path = "../data/hydrogenics_report.txt"
 
 
-tags = nltk.pos_tag(tokens)
-#print(tags)
+class RelationExtractor(object):
 
-dic = defaultdict(set)
-for k, v in tags:
-    dic[k].add(v)
+    def __init__(self, path, nlp):
+        self.nlp = nlp
+        with open(path, 'r') as file:
+            text = file.read()
+        #TODO read text as a string and tokenize it by sentences
 
-print(dic)
-
-def get_pos_dict(tokens):
-    #TODO return a dictionary of homographs (a dictionary of words and their possible POS)
-    tags = nltk.pos_tag(tokens)
-    pos_dict = defaultdict(set)
-    for word, tag in tags:
-        pos_dict[word].add(tag)
-
-    return pos_dict
-
-def filter_dict_homographs(word_dict_h):
-    #TODO delete an entry from dictionary, if not a homograph
-    non_homograph = []
-    for key, value in word_dict_h.items():
-        if len(value) == 1:
-            non_homograph.append(key)
-
-    for word in non_homograph:
-        del word_dict_h[word]
+        self.sentences = nltk.sent_tokenize(text) #TODO replace -> create the list of sentences from the file
 
 
-filter_dict_homographs(dic)
-print(dic)
+    def entities_and_nounChunks(self,doc):
+        #TODO extract all entities and noun phrases and save them into one list'''
+
+        ent_liste = []
+        for ent in doc.ents:
+            ent_liste.append(ent)
+
+        return ent_liste
+
+extractor = RelationExtractor(path, model)
+doc = extractor.nlp("Net income was $6.4 million")
+entitiesAndChunks = extractor.entities_and_nounChunks(doc)
+extractor.entities_and_nounChunks(doc)
+print(doc.ents)
+print(entitiesAndChunks)
+
+#print(len(extractor.sentences), 12)
+
+entitiesAndChunks = [el.text for el in entitiesAndChunks]
+
+print('Net income' in entitiesAndChunks)
+print('$6.4 million' in entitiesAndChunks)

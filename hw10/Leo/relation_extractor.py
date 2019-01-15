@@ -3,15 +3,23 @@ import nltk
 
 class RelationExtractor(object):
 
-    def __init__(self, path,nlp):
+    def __init__(self, path, nlp):
         self.nlp = nlp
+        with open(path, 'r') as file:
+            text = file.read()
         #TODO read text as a string and tokenize it by sentences
-        self.sentences = None #TODO replace -> create the list of sentences from the file
+
+        self.sentences = nltk.sent_tokenize(text) #TODO replace -> create the list of sentences from the file
 
 
     def entities_and_nounChunks(self,doc):
         #TODO extract all entities and noun phrases and save them into one list'''
-        pass
+
+        ent_liste = []
+        for ent in doc.ents:
+            ent_liste.append(ent)
+
+        return ent_liste
 
     def update_tokenizer(self,spans):
         # make from entities and noun chunks a single token

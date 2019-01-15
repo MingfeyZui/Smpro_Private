@@ -1,9 +1,9 @@
 from unittest import TestCase
-from hw10_crawling.relation_extractor import RelationExtractor
+from relation_extractor import RelationExtractor
 import spacy
 
 model = spacy.load('en_core_web_sm')
-path = "data/hydrogenics_report.txt"
+path = "../data/hydrogenics_report.txt"
 
 class ExtractorTest(TestCase):
 

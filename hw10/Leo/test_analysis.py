@@ -38,4 +38,3 @@ class AnalysisTest(TestCase):
         self.assertTrue("light" in homographs)
         self.assertTrue("diesel" in homographs)
         self.assertTrue("pure" in homographs)
-

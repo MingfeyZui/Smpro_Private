@@ -1,19 +1,12 @@
 #!/usr/local/bin/python3
 
-import re
-from collections import defaultdict
-import urllib.request
-from bs4 import BeautifulSoup
-import spacy
 
-nlp = spacy.load("en_core_web_sm")
-doc = nlp(u"Net income was $9.4 million compared to the prior year of $2.7 million.")
-ents_and_chunks = list(doc.ents)+list(doc.noun_chunks)
+li1 = [True,False,False,True]
+li2 = [True,True,False,True]
+ergs = [1 if li1[i] == li2[i] else 0 for i in range(len(li1))]
+print(sum(ergs)/len(ergs))
 
 
-
-def get_html(url):
-    return urllib.request.urlopen(url).read().decode("utf-8")
 
 def sortieren(li):
     res = [li[0]]
